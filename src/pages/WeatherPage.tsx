@@ -1,9 +1,17 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetWeather } from "../hooks/useGetWeather";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 export const WeatherPage = () => {
   const { city } = useParams();
   const { data, isLoading, isError, isSuccess } = useGetWeather(city ?? "");
+
+  const addLocation = async (location: string) => {
+    await setDoc(doc(db, "saved-locations", location), {
+      location: location,
+    });
+  };
 
   return (
     <div className="weather-page">
@@ -34,6 +42,16 @@ export const WeatherPage = () => {
             </ul>
           </>
         )}
+        <Link
+          to="#"
+          className="add-location"
+          onClick={() => {
+            if (!data) return;
+            addLocation(data?.name);
+          }}
+        >
+          Add
+        </Link>
       </div>
     </div>
   );
