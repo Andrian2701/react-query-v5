@@ -1,4 +1,4 @@
-import { SavedLocation } from "../components/SavedLocation";
+import { SavedLocationCard } from "../components/SavedLocationCard";
 import { SearchFiled } from "../components/SearchField";
 import { useGetSavedLocationsWeather } from "../hooks/useGetSavedLocationsWeather";
 import { useGetSavedLocations } from "../hooks/useGetSavedLocations";
@@ -14,14 +14,14 @@ export const HomePage = () => {
     <div className="home-page">
       <SearchFiled />
       <div className="saved-locations">
+        {isError && <h2>Failed to load data</h2>}
         {!isPending ? (
           savedLocationWeather.map((item) => (
-            <SavedLocation item={item} key={item && item.id} />
+            <SavedLocationCard item={item} key={item && item.id} />
           ))
         ) : (
           <h2>Loading...</h2>
         )}
-        {isError && <h2>Failed to load data</h2>}
       </div>
     </div>
   );

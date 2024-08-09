@@ -13,8 +13,9 @@ export const useGetSavedLocations = () => {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["saved-locations"],
     queryFn: () => getSavedLocationsData(),
-    refetchInterval: 300000,
     staleTime: 300000,
+    refetchInterval: 300000,
+    refetchOnWindowFocus: false,
   });
 
   return {
